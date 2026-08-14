@@ -1,146 +1,185 @@
 # ============================================================
-#              PERRIN POS v2 — PARTE 2
-#                 AGREGAR PRODUCTOS
+#          PERRIN POS v2 — ELIMINAR PRODUCTOS
 # ============================================================
 
 # OBJETIVO:
-# Crear una función que permita agregar productos a la lista
-# principal del sistema.
+# Crear una función que permita eliminar productos existentes
+# de la lista.
 
 
 # ------------------------------------------------------------
 # PASO 1 — CREAR LA FUNCIÓN
 # ------------------------------------------------------------
 
-# Crear una función llamada agregar_producto.
+# Crear una función llamada eliminar_producto.
 #
-# La función debe recibir como parámetro la lista de productos.
+# Debe recibir como parámetro la lista de productos.
 #
-# Pista de estructura:
+# Pista:
 #
-# def agregar_producto(...):
+# def eliminar_producto(...):
 
 
 # ------------------------------------------------------------
 # PASO 2 — PEDIR EL PRODUCTO
 # ------------------------------------------------------------
 
-# Dentro de la función:
+# Preguntar al usuario qué producto desea eliminar.
 #
-# Preguntar al usuario qué producto desea agregar.
+# Guardar la respuesta en una variable.
 #
-# Guardar lo que escriba en una variable.
+# Utilizar .strip() para eliminar espacios innecesarios.
 
 
 # ------------------------------------------------------------
-# PASO 3 — VALIDAR EL PRODUCTO
+# PASO 3 — COMPROBAR SI EXISTE
 # ------------------------------------------------------------
 
-# Comprobar si el usuario realmente escribió algo.
+# Comprobar si el producto escrito está dentro
+# de la lista de productos.
 #
-# SI escribió un producto:
-#     → agregarlo a la lista.
-#     → mostrar "Producto agregado correctamente".
+# Aquí necesitarás:
 #
-# SI NO escribió nada:
-#     → NO agregar nada.
-#     → mostrar "El producto no puede estar vacío".
-#
-# PISTAS:
-#
-# if variable:
-#
-# lista.append(...)
+# if _____ in productos:
 
 
 # ------------------------------------------------------------
-# PASO 4 — CONECTARLO AL MENÚ
+# PASO 4 — ELIMINAR
 # ------------------------------------------------------------
 
-# Buscar esta parte del programa:
+# SI el producto existe:
 #
-# elif menu == 2:
+# → eliminarlo utilizando .remove()
+# → mostrar:
 #
-# Quitar el print provisional de "Agregar producto".
+# "Producto eliminado correctamente"
 #
-# En su lugar, llamar a agregar_producto()
-# y enviarle la lista de productos como argumento.
+#
+# SI NO existe:
+#
+# → NO intentar eliminarlo.
+# → mostrar:
+#
+# "Producto no encontrado"
 
 
 # ------------------------------------------------------------
-# PASO 5 — PROBAR EL SISTEMA
+# PASO 5 — CONECTAR CON EL MENÚ
 # ------------------------------------------------------------
 
-# PRUEBA 1:
+# Actualmente tenemos:
 #
-# Elegir opción 1.
+# elif menu == 3:
+#     print("Eliminar producto")
 #
-# Resultado esperado:
-# "No hay productos"
+# Reemplazar ese print por una llamada a:
+#
+# eliminar_producto(...)
+#
+# Piensa qué argumento necesita recibir.
 
 
-# PRUEBA 2:
-#
-# Elegir opción 2.
-# Escribir: Leche
-#
-# Resultado esperado:
-# "Producto agregado correctamente"
+# ------------------------------------------------------------
+# PRUEBA 1
+# ------------------------------------------------------------
 
-
-# PRUEBA 3:
-#
-# Elegir opción 1.
-#
-# Resultado esperado:
-# Leche
-
-
-# PRUEBA 4:
-#
 # Agregar:
+#
+# Leche
 # Pan
 # Huevos
 #
-# Luego elegir "Ver productos".
+# Ver productos.
 #
-# Resultado esperado:
+# Resultado:
 #
 # Leche
 # Pan
 # Huevos
 
 
-# PRUEBA 5 — VALIDACIÓN:
+# ------------------------------------------------------------
+# PRUEBA 2
+# ------------------------------------------------------------
+
+# Elegir eliminar producto.
 #
-# Elegir opción 2.
-# NO escribir ningún producto y presionar Enter.
+# Escribir:
+#
+# Pan
 #
 # Resultado esperado:
-# "El producto no puede estar vacío"
+#
+# "Producto eliminado correctamente"
+#
+# Después, al ver productos:
+#
+# Leche
+# Huevos
+
+
+# ------------------------------------------------------------
+# PRUEBA 3 — PRODUCTO INEXISTENTE
+# ------------------------------------------------------------
+
+# Intentar eliminar:
+#
+# Chocolate
+#
+# Resultado esperado:
+#
+# "Producto no encontrado"
 #
 # IMPORTANTE:
-# El dato vacío NO debe aparecer después en la lista.
+# El programa NO debe cerrarse ni producir error.
 
 
 # ============================================================
-#                NO HACER TODAVÍA
+#                    RETO EXTRA 🌶️
 # ============================================================
 
-# ❌ No agregar precios.
-# ❌ No agregar cantidades.
-# ❌ No realizar ventas.
-# ❌ No utilizar diccionarios.
-# ❌ No buscar la solución en Copilot 😂
+# ¿Qué pasa si el usuario entra a "Eliminar producto"
+# cuando la lista está completamente vacía?
 #
-# Utilizar únicamente cosas que ya conocemos:
+# Intenta conseguir que antes de preguntar qué producto
+# quiere eliminar, el programa detecte que:
 #
-# - Funciones
-# - Parámetros
-# - input()
-# - if / else
+# productos = []
+#
+# y muestre:
+#
+# "No hay productos para eliminar"
+#
+# En ese caso NO debería preguntar el nombre del producto.
+#
+# PISTA:
+#
+# Ya sabes comprobar si una lista tiene datos:
+#
+# if productos:
+#
+# Piensa cómo podrías combinarlo con else.
+
+
+# ============================================================
+# NO UTILIZAR TODAVÍA
+# ============================================================
+
+# ❌ try / except
+# ❌ diccionarios
+# ❌ bases de datos
+# ❌ Copilot haciendo el ejercicio por nosotros 😂
+#
+# TODO se puede resolver utilizando:
+#
+# - funciones
+# - parámetros
 # - listas
-# - append()
+# - if / else
+# - in
+# - remove()
+# - input()
+# - strip()
 #
 # ============================================================
 
@@ -165,14 +204,39 @@ def ver_productos(productos):
         print("No hay productos")
 
 def agregar_producto(productos):
-    agregar = input("Qué producto desea agregar? ")
+    nuevo_producto = {
+        "Nombre": input("Qué producto desea agregar al sistema?: ").strip(),
+        "Precio": float(input("Ingrese el precio del producto: ").strip()),
+        "Stock": int(input("Ingrese el stock del producto: ").strip())
+    }
 
-    if agregar:
-        productos.append(agregar)
-        print("Producto agregado correctamente")
+    
+
+    if nuevo_producto:
+        productos.append(nuevo_producto)
+        print("Poducto agregado exitosamente!")
     else:
-        print("El producto no puede estar vacío")
+        print("Vuelva a escribir el producto...")
+    
 
+def eliminar_producto(productos):
+    if productos:
+        borrar = input("Qué producto desea borrar? ").strip()
+
+        if borrar in productos:
+            productos.remove(borrar)
+            print("Producto borrado exitosamente")
+        else:
+            print("Ese producto no existe, inténtelo nuevamente.")
+    else:
+        print("No hay productos para eliminar")
+
+def realizar_venta():
+    if productos:
+        producto_comprado = input("Ingrese el producto que desea comprar")
+
+        if producto_comprado in productos:
+            precio = float(input(""))
 
 while menu != 6:
     mostrar_menu()
@@ -184,7 +248,7 @@ while menu != 6:
     elif menu == 2:
         agregar_producto(productos)
     elif menu == 3:
-        print("Eliminar producto")
+        eliminar_producto(productos)
     elif menu == 4:
         print("Realizar venta")
     elif menu == 5:
@@ -194,4 +258,4 @@ while menu != 6:
     else:
         print("Opción inválida")
 
-    
+        
