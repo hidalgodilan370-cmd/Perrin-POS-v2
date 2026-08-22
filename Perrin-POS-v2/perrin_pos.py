@@ -1,188 +1,3 @@
-# ============================================================
-#          PERRIN POS v2 — ELIMINAR PRODUCTOS
-# ============================================================
-
-# OBJETIVO:
-# Crear una función que permita eliminar productos existentes
-# de la lista.
-
-
-# ------------------------------------------------------------
-# PASO 1 — CREAR LA FUNCIÓN
-# ------------------------------------------------------------
-
-# Crear una función llamada eliminar_producto.
-#
-# Debe recibir como parámetro la lista de productos.
-#
-# Pista:
-#
-# def eliminar_producto(...):
-
-
-# ------------------------------------------------------------
-# PASO 2 — PEDIR EL PRODUCTO
-# ------------------------------------------------------------
-
-# Preguntar al usuario qué producto desea eliminar.
-#
-# Guardar la respuesta en una variable.
-#
-# Utilizar .strip() para eliminar espacios innecesarios.
-
-
-# ------------------------------------------------------------
-# PASO 3 — COMPROBAR SI EXISTE
-# ------------------------------------------------------------
-
-# Comprobar si el producto escrito está dentro
-# de la lista de productos.
-#
-# Aquí necesitarás:
-#
-# if _____ in productos:
-
-
-# ------------------------------------------------------------
-# PASO 4 — ELIMINAR
-# ------------------------------------------------------------
-
-# SI el producto existe:
-#
-# → eliminarlo utilizando .remove()
-# → mostrar:
-#
-# "Producto eliminado correctamente"
-#
-#
-# SI NO existe:
-#
-# → NO intentar eliminarlo.
-# → mostrar:
-#
-# "Producto no encontrado"
-
-
-# ------------------------------------------------------------
-# PASO 5 — CONECTAR CON EL MENÚ
-# ------------------------------------------------------------
-
-# Actualmente tenemos:
-#
-# elif menu == 3:
-#     print("Eliminar producto")
-#
-# Reemplazar ese print por una llamada a:
-#
-# eliminar_producto(...)
-#
-# Piensa qué argumento necesita recibir.
-
-
-# ------------------------------------------------------------
-# PRUEBA 1
-# ------------------------------------------------------------
-
-# Agregar:
-#
-# Leche
-# Pan
-# Huevos
-#
-# Ver productos.
-#
-# Resultado:
-#
-# Leche
-# Pan
-# Huevos
-
-
-# ------------------------------------------------------------
-# PRUEBA 2
-# ------------------------------------------------------------
-
-# Elegir eliminar producto.
-#
-# Escribir:
-#
-# Pan
-#
-# Resultado esperado:
-#
-# "Producto eliminado correctamente"
-#
-# Después, al ver productos:
-#
-# Leche
-# Huevos
-
-
-# ------------------------------------------------------------
-# PRUEBA 3 — PRODUCTO INEXISTENTE
-# ------------------------------------------------------------
-
-# Intentar eliminar:
-#
-# Chocolate
-#
-# Resultado esperado:
-#
-# "Producto no encontrado"
-#
-# IMPORTANTE:
-# El programa NO debe cerrarse ni producir error.
-
-
-# ============================================================
-#                    RETO EXTRA 🌶️
-# ============================================================
-
-# ¿Qué pasa si el usuario entra a "Eliminar producto"
-# cuando la lista está completamente vacía?
-#
-# Intenta conseguir que antes de preguntar qué producto
-# quiere eliminar, el programa detecte que:
-#
-# productos = []
-#
-# y muestre:
-#
-# "No hay productos para eliminar"
-#
-# En ese caso NO debería preguntar el nombre del producto.
-#
-# PISTA:
-#
-# Ya sabes comprobar si una lista tiene datos:
-#
-# if productos:
-#
-# Piensa cómo podrías combinarlo con else.
-
-
-# ============================================================
-# NO UTILIZAR TODAVÍA
-# ============================================================
-
-# ❌ try / except
-# ❌ diccionarios
-# ❌ bases de datos
-# ❌ Copilot haciendo el ejercicio por nosotros 😂
-#
-# TODO se puede resolver utilizando:
-#
-# - funciones
-# - parámetros
-# - listas
-# - if / else
-# - in
-# - remove()
-# - input()
-# - strip()
-#
-# ============================================================
-
 productos = []
 total_vendido = 0
 menu = 0
@@ -199,7 +14,7 @@ def mostrar_menu():
 def ver_productos(productos):
     if productos:
         for producto in productos:
-            print(producto)
+            print("Nombre:", producto["Nombre"], "| Precio: ₡", producto["Precio"], "| Stock:", producto["Stock"])
     else:
         print("No hay productos")
 
@@ -212,31 +27,45 @@ def agregar_producto(productos):
 
     
 
-    if nuevo_producto:
+    if nuevo_producto["Nombre"]:
         productos.append(nuevo_producto)
         print("Poducto agregado exitosamente!")
     else:
         print("Vuelva a escribir el producto...")
     
-
 def eliminar_producto(productos):
     if productos:
         borrar = input("Qué producto desea borrar? ").strip()
 
-        if borrar in productos:
-            productos.remove(borrar)
-            print("Producto borrado exitosamente")
-        else:
-            print("Ese producto no existe, inténtelo nuevamente.")
+        for producto in productos:
+            if borrar == producto["Nombre"]:
+                productos.remove(producto)
+                print("Producto eliminado exitosamene!")
+
     else:
         print("No hay productos para eliminar")
 
-def realizar_venta():
+def realizar_venta(productos):
     if productos:
-        producto_comprado = input("Ingrese el producto que desea comprar")
+        compra = input("Qué producto desea comprar? ")
 
-        if producto_comprado in productos:
-            precio = float(input(""))
+        for producto in productos:
+            if producto["Nombre"] == compra:
+                print(producto)
+
+                cantidad = int(input("Cuantas unidades desea comprar: "))
+
+                if cantidad <= producto["Stock"]:
+                    producto["Stock"] -= cantidad
+
+                    total_venta = producto["Precio"] * cantidad
+
+                    print("Debe de pagar: ₡", total_venta)
+
+                    return total_venta
+
+    else:
+        print("No hay productos en el inventario")
 
 while menu != 6:
     mostrar_menu()
@@ -250,12 +79,12 @@ while menu != 6:
     elif menu == 3:
         eliminar_producto(productos)
     elif menu == 4:
-        print("Realizar venta")
+        realizar_venta(productos)
     elif menu == 5:
-        print("Ver total vendido")
+        total_vendido = realizar_venta(productos)
+        print(total_vendido)
     elif menu == 6:
         print("Cerrando Perrin POS v2...")
     else:
         print("Opción inválida")
 
-        
